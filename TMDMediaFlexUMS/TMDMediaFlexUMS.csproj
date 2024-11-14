@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<PlatformTarget>x86</PlatformTarget>
+		<AssemblyName>Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS</AssemblyName>
+		<RootNamespace>Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>SkylineCommunications</Authors>
+		<Company>Skyline Communications</Company>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageTags>Skyline;DataMiner</PackageTags>
+		<PackageProjectUrl>https://skyline.be/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SkylineCommunications/Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Description>This package contains the messages that allow developers to interact with the TMD MediaFlex UMS connector using InterApp communication.</Description>
+		<PackageIcon>Icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>1.0.1</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\LICENSE.txt" Pack="true" PackagePath="" />
+		<None Include="nuget\Icon.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Skyline.DataMiner.Core.InterAppCalls.Common" Version="1.0.0.3" />
+	</ItemGroup>
+</Project>
