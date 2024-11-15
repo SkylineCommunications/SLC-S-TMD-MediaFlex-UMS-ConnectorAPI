@@ -1,4 +1,4 @@
-# Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
+# SLC-S-TMD-MediaFlex-UMS-ConnectorAPI
 
 ## About
 
