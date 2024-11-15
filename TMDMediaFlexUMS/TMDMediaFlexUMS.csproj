@@ -12,7 +12,7 @@
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageTags>Skyline;DataMiner</PackageTags>
 		<PackageProjectUrl>https://skyline.be/</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/SkylineCommunications/Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS</RepositoryUrl>
+		<RepositoryUrl>https://github.com/SkylineCommunications/SLC-S-TMD-MediaFlex-UMS-ConnectorAPI</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<Description>This package contains the messages that allow developers to interact with the TMD MediaFlex UMS connector using InterApp communication.</Description>
 		<PackageIcon>Icon.png</PackageIcon>
