@@ -1,11 +1,5 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     public static class TMDMediaFlexUMSProtocol
     {
         public static readonly string Name = "";
