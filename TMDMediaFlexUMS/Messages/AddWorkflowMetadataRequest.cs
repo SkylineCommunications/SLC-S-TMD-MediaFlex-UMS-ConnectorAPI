@@ -9,13 +9,8 @@
     public class AddWorkflowMetadataRequest : Message
     {
         /// <summary>
-        /// Gets or sets the Plasma ID of the request. This Plasma ID uniquely identifies the recording to be archived in MediaFlex.
+        /// Gets or sets the job be sent to MediaFlex.
         /// </summary>
-        public string PlasmaId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the metadata to be delivered to MediaFlex.
-        /// </summary>
-        public Metadata Metadata { get; set; }
+        public Job Job { get; set; }
     }
 }

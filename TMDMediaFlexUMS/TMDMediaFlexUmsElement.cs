@@ -91,29 +91,42 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
         }
 
         /// <summary>
-        /// Provides metadata about a recording to MediaFlex.
+        /// Provides metadata about a recording to MediaFlex. Prefills job fields with default values.
         /// </summary>
         /// <param name="plasmaId">Plasma ID of the recording.</param>
         /// <param name="metadata">Metadata of the recording.</param>
         /// <exception cref="InvalidOperationException">Thrown in case the InterApp communication fails or if the request to MediaFlex fails.</exception>
         public void AddMetadata(string plasmaId, Metadata metadata)
         {
+            Job job = new Job();
+            job.SourceItems.Add($"version/versionid1:{plasmaId}");
+            job.CustomMetadataDocs.Add(new CustomMetadataDoc { SchemaId = "1235", DocumentBody = new DocumentBody { DataminerMetadata = metadata } });
+
+            AddMetadata(job);
+        }
+
+        /// <summary>
+        /// Provides metadata about a recording to MediaFlex. This call allows the user to fully define the Job isntance sent to MediaFlex.
+        /// </summary>
+        /// <param name="job">Job responsible for delivering recording metadata.</param>
+        /// <exception cref="InvalidOperationException">Thrown in case the InterApp communication fails or if the request to MediaFlex fails.</exception>
+        public void AddMetadata(Job job)
+        {
             var request = new AddWorkflowMetadataRequest
             {
-                PlasmaId = plasmaId,
-                Metadata = metadata,
+                Job = job
             };
 
             if (!TrySendMessage(request, true, out string reason, out AddWorkflowMetadataResponse response))
             {
                 logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Something when wrong in InterApp communication: {reason}");
-                throw new InvalidOperationException($"Unable to add meta data to recording with Plasma ID {plasmaId} due to {reason}");
+                throw new InvalidOperationException($"Unable to add meta data to recording due to {reason}");
             }
 
             if (!response.Success)
             {
                 logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Failed response received: {reason}");
-                throw new InvalidOperationException($"Unable to add meta data to recording with Plasma ID {plasmaId} due to {response.Reason}");
+                throw new InvalidOperationException($"Unable to add meta data to recording due to {response.Reason}");
             }
         }
 

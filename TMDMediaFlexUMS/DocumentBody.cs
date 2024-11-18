@@ -1,0 +1,19 @@
+﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
+{
+    using Newtonsoft.Json;
+
+    /// <summary>
+    /// Represents the body of a document within a Media Asset Management (MAM) system.
+    /// Encapsulates metadata related to the document for processing and management.
+    /// </summary>
+    public class DocumentBody
+    {
+        /// <summary>
+        /// Contains metadata specific to Dataminer, a component or module
+        /// responsible for managing or processing media-related metadata.
+        /// </summary>
+        [JsonProperty("DataminerMetadata")]
+        public Metadata DataminerMetadata { get; set; }
+    }
+
+}
