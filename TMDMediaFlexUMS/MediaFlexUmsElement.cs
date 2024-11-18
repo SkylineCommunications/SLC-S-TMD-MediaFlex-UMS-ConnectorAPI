@@ -53,7 +53,7 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
         /// <exception cref="ArgumentNullException">Thrown when the provided connection or the element is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when provided element id or agent id is negative.</exception>
         /// <exception cref="InvalidOperationException">Thrown when described element is inactive.</exception>
-        public MediaFlexUmsElement(Connection connection, int agentId, int elementId, ILogger logger = null)
+        public MediaFlexUmsElement(IConnection connection, int agentId, int elementId, ILogger logger = null)
         {
             this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
             if (agentId < 0) throw new ArgumentOutOfRangeException(nameof(agentId), "Agent ID cannot be negative");
