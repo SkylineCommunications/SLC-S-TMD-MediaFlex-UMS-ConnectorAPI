@@ -17,7 +17,7 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
     /// <summary>
     /// Represents a TMD MediaFlex UMS element in DataMiner and exposes methods to request and release locks on specific objects.
     /// </summary>
-    public class MediaFlexUmsElement
+    public class TmdMediaFlexUmsElement
     {
         private readonly IConnection connection;
         private readonly IDmsElement element;
@@ -44,16 +44,16 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
         public static IEnumerable<Type> KnownTypes => knownTypes;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaFlexUmsElement"/> class.
+        /// Initializes a new instance of the <see cref="TmdMediaFlexUmsElement"/> class.
         /// </summary>
         /// <param name="connection">Connection used to communicate with the MediaFlex UMS element.</param>
         /// <param name="agentId">ID of the agent on which the MediaFlex UMS element is hosted.</param>
         /// <param name="elementId">ID of the MediaFlex UMS element.</param>
-        /// <param name="logger">Used to log debug info from the <see cref="MediaFlexUmsElement"/> instance.</param>
+        /// <param name="logger">Used to log debug info from the <see cref="TmdMediaFlexUmsElement"/> instance.</param>
         /// <exception cref="ArgumentNullException">Thrown when the provided connection or the element is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when provided element id or agent id is negative.</exception>
         /// <exception cref="InvalidOperationException">Thrown when described element is inactive.</exception>
-        public MediaFlexUmsElement(IConnection connection, int agentId, int elementId, ILogger logger = null)
+        public TmdMediaFlexUmsElement(IConnection connection, int agentId, int elementId, ILogger logger = null)
         {
             this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
             if (agentId < 0) throw new ArgumentOutOfRangeException(nameof(agentId), "Agent ID cannot be negative");
@@ -77,13 +77,13 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
                 if (timeout != null) return (TimeSpan)timeout;
                 try
                 {
-                    var timeoutInSeconds = element.GetStandaloneParameter<double?>(TMDMediaFlexUMSProtocol.InterAppTimeoutPid);
+                    var timeoutInSeconds = element.GetStandaloneParameter<double?>(TmdMediaFlexUmsProtocol.InterAppTimeoutPid);
                     timeout = TimeSpan.FromSeconds(timeoutInSeconds.GetValue().Value);
                     return (TimeSpan)timeout;
                 }
                 catch (Exception e)
                 {
-                    logger?.Log(nameof(MediaFlexUmsElement), nameof(Timeout), $"Unable to retrieve timeout from element due to {e}, defaulting to 10 seconds.");
+                    logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Unable to retrieve timeout from element due to {e}, defaulting to 10 seconds.");
                     timeout = TimeSpan.FromSeconds(10);
                     return (TimeSpan)timeout;
                 }
@@ -106,13 +106,13 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 
             if (!TrySendMessage(request, true, out string reason, out AddWorkflowMetadataResponse response))
             {
-                logger?.Log(nameof(MediaFlexUmsElement), nameof(Timeout), $"Something when wrong in InterApp communication: {reason}");
+                logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Something when wrong in InterApp communication: {reason}");
                 throw new InvalidOperationException($"Unable to add meta data to recording with Plasma ID {plasmaId} due to {reason}");
             }
 
             if (!response.Success)
             {
-                logger?.Log(nameof(MediaFlexUmsElement), nameof(Timeout), $"Failed response received: {reason}");
+                logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Failed response received: {reason}");
                 throw new InvalidOperationException($"Unable to add meta data to recording with Plasma ID {plasmaId} due to {response.Reason}");
             }
         }
@@ -125,13 +125,13 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
             var commands = InterAppCallFactory.CreateNew();
             commands.Messages.Add(message);
 
-            logger?.Log(nameof(MediaFlexUmsElement), nameof(TrySendMessage), $"Message: {JsonConvert.SerializeObject(message)}");
+            logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(TrySendMessage), $"Message: {JsonConvert.SerializeObject(message)}");
 
             try
             {
                 if (requiresResponse)
                 {
-                    var response = commands.Send(connection, element.AgentId, element.Id, TMDMediaFlexUMSProtocol.InterAppReceivePid, Timeout, knownTypes).First();
+                    var response = commands.Send(connection, element.AgentId, element.Id, TmdMediaFlexUmsProtocol.InterAppReceivePid, Timeout, knownTypes).First();
                     if (!(response is T castResponse))
                     {
                         reason = $"Received response is not of type {typeof(T)}";
@@ -142,7 +142,7 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
                 }
                 else
                 {
-                    commands.Send(connection, element.AgentId, element.Id, TMDMediaFlexUMSProtocol.InterAppReceivePid, knownTypes);
+                    commands.Send(connection, element.AgentId, element.Id, TmdMediaFlexUmsProtocol.InterAppReceivePid, knownTypes);
                 }
             }
             catch (Exception e)
