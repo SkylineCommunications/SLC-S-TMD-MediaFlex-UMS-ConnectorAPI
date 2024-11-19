@@ -75,7 +75,7 @@
         /// </summary>
         [XmlElement("versionSourceType")]
         [JsonProperty("versionSourceType")]
-        public string VersionSourceType { get; set; }
+        public string VersionSourceType { get; set; } = "asVersion";
 
         /// <summary>
         /// A list of source items (e.g., media file paths or asset IDs) associated with the job.
