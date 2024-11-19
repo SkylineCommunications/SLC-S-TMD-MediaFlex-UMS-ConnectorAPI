@@ -1,5 +1,6 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
+    using Newtonsoft.Json;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -13,12 +14,14 @@
         /// Gets or sets the comments related to the MAM (Media Asset Management) import process.
         /// </summary>
         [XmlElement("MAMImportComments")]
+        [JsonProperty("MAMImportComments")]
         public string MAMImportComments { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the media operator responsible for the final check process.
         /// </summary>
         [XmlElement("MediaOperatorName")]
+        [JsonProperty("MediaOperatorName")]
         public string MediaOperatorName { get; set; }
     }
 }

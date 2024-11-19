@@ -1,5 +1,6 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
+    using Newtonsoft.Json;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -14,6 +15,7 @@
         /// Specifies the structure and validation rules for the metadata content.
         /// </summary>
         [XmlElement("schemaId")]
+        [JsonProperty("schemaId")]
         public string SchemaId { get; set; }
 
         /// <summary>
@@ -21,6 +23,7 @@
         /// Encapsulates data defined by the specified schema.
         /// </summary>
         [XmlElement("documentBody")]
+        [JsonProperty("documentBody")]
         public DocumentBody DocumentBody { get; set; }
     }
 

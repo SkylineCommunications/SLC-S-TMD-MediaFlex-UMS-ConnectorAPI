@@ -1,5 +1,6 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
+    using Newtonsoft.Json;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -14,6 +15,7 @@
         /// responsible for managing or processing media-related metadata.
         /// </summary>
         [XmlElement("DataminerMetadata")]
+        [JsonProperty("DataminerMetadata")]
         public DataminerMetadata DataminerMetadata { get; set; }
     }
 

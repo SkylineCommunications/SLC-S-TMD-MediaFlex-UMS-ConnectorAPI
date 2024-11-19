@@ -1,5 +1,6 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
+    using Newtonsoft.Json;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -14,6 +15,7 @@
         /// Useful for categorization and search functionality in a MAM system.
         /// </summary>
         [XmlElement("GeneralInformation")]
+        [JsonProperty("GeneralInformation")]
         public GeneralInformation GeneralInformation { get; set; }
 
         /// <summary>
@@ -21,6 +23,7 @@
         /// performed on the media asset before approval or publication.
         /// </summary>
         [XmlElement("FinalCheck")]
+        [JsonProperty("FinalCheck")]
         public FinalCheck FinalCheck { get; set; }
 
         /// <summary>
@@ -28,6 +31,7 @@
         /// such as format, duration, and technical specifications, essential for playback and distribution.
         /// </summary>
         [XmlElement("VideoProgramClipSpecificInfo")]
+        [JsonProperty("VideoProgramClipSpecificInfo")]
         public VideoProgramClipSpecificInfo VideoProgramClipSpecificInfo { get; set; }
     }
 }
