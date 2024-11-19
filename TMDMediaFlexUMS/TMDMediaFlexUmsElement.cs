@@ -31,10 +31,9 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
             typeof(AddWorkflowMetadataRequest),
             typeof(AddWorkflowMetadataResponse),
             typeof(AudioAsset),
-            typeof(AudioAssetInfo),
             typeof(FinalCheck),
             typeof(GeneralInformation),
-            typeof(Metadata),
+            typeof(DataminerMetadata),
             typeof(VideoProgramClipSpecificInfo),
         };
 
@@ -96,7 +95,7 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
         /// <param name="plasmaId">Plasma ID of the recording.</param>
         /// <param name="metadata">Metadata of the recording.</param>
         /// <exception cref="InvalidOperationException">Thrown in case the InterApp communication fails or if the request to MediaFlex fails.</exception>
-        public void AddMetadata(string plasmaId, Metadata metadata)
+        public void AddMetadata(string plasmaId, DataminerMetadata metadata)
         {
             Job job = new Job();
             job.SourceItems.Add($"version/versionid1:{plasmaId}");

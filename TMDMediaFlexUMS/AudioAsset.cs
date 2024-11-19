@@ -1,34 +1,36 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
     using Newtonsoft.Json;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// Metadata about audio assets in the recording.
     /// </summary>
+    [XmlRoot("AudioAsset")]
     public class AudioAsset
     {
         /// <summary>
         /// Gets or sets the track number of the audio asset.
         /// </summary>
-        [JsonProperty("trackNumber")]
+        [XmlElement("trackNumber")]
         public int TrackNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the mix type of the audio asset (e.g., stereo, mono, etc.).
         /// </summary>
-        [JsonProperty("mixType")]
+        [XmlElement("mixType")]
         public string MixType { get; set; }
 
         /// <summary>
         /// Gets or sets the language of the audio asset (e.g., English, Spanish, etc.).
         /// </summary>
-        [JsonProperty("Language")]
+        [XmlElement("Language")]
         public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets the audio type (e.g., podcast, music, audiobook, etc.).
         /// </summary>
-        [JsonProperty("audioType")]
+        [XmlElement("audioType")]
         public string AudioType { get; set; }
     }
 }
