@@ -4,13 +4,9 @@ using Skyline.DataMiner.Core.DataMinerSystem.Common;
 using Skyline.DataMiner.Core.InterAppCalls.Common.CallBulk;
 using Skyline.DataMiner.Core.InterAppCalls.Common.CallSingle;
 using Skyline.DataMiner.Net;
-using Skyline.DataMiner.Net.Messages.SLDataGateway;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {

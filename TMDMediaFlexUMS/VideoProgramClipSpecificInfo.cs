@@ -1,6 +1,5 @@
 ﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
 {
-    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Xml.Serialization;
 

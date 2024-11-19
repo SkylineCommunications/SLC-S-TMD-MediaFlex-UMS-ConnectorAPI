@@ -2,7 +2,6 @@
 {
     using System;
     using System.Xml.Serialization;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Represents general information related to an asset, including metadata such as order name, timestamps,
