@@ -78,6 +78,10 @@
         [XmlArrayItem("sourceItem")]
         public List<string> SourceItems { get; set; } = new List<string>();
 
+        /// <summary>
+        /// Serializes the current job to XML.
+        /// </summary>
+        /// <returns>XML serialized string representing this instance.</returns>
         public string Serialize()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Job));
@@ -88,6 +92,11 @@
             }
         }
 
+        /// <summary>
+        /// Deserializes the provided XML to a job instance.
+        /// </summary>
+        /// <param name="serializedJob">XML representing a job instance.</param>
+        /// <returns></returns>
         public static Job Deserialize(string serializedJob)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Job));
