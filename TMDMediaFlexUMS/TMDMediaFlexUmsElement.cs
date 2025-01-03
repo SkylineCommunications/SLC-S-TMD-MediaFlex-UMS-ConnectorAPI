@@ -38,17 +38,22 @@ namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
         /// </summary>
         public static IEnumerable<Type> KnownTypes => knownTypes;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TmdMediaFlexUmsElement"/> class.
-        /// </summary>
-        /// <param name="connection">Connection used to communicate with the MediaFlex UMS element.</param>
-        /// <param name="agentId">ID of the agent on which the MediaFlex UMS element is hosted.</param>
-        /// <param name="elementId">ID of the MediaFlex UMS element.</param>
-        /// <param name="logger">Used to log debug info from the <see cref="TmdMediaFlexUmsElement"/> instance.</param>
-        /// <exception cref="ArgumentNullException">Thrown when the provided connection or the element is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when provided element id or agent id is negative.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when described element is inactive.</exception>
-        public TmdMediaFlexUmsElement(IConnection connection, int agentId, int elementId, ILogger logger = null)
+		/// <summary>
+		/// Gets the name of the DataMiner element.
+		/// </summary>
+		public string Name => element.Name;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TmdMediaFlexUmsElement"/> class.
+		/// </summary>
+		/// <param name="connection">Connection used to communicate with the MediaFlex UMS element.</param>
+		/// <param name="agentId">ID of the agent on which the MediaFlex UMS element is hosted.</param>
+		/// <param name="elementId">ID of the MediaFlex UMS element.</param>
+		/// <param name="logger">Used to log debug info from the <see cref="TmdMediaFlexUmsElement"/> instance.</param>
+		/// <exception cref="ArgumentNullException">Thrown when the provided connection or the element is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown when provided element id or agent id is negative.</exception>
+		/// <exception cref="InvalidOperationException">Thrown when described element is inactive.</exception>
+		public TmdMediaFlexUmsElement(IConnection connection, int agentId, int elementId, ILogger logger = null)
         {
             this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
             if (agentId < 0) throw new ArgumentOutOfRangeException(nameof(agentId), "Agent ID cannot be negative");
