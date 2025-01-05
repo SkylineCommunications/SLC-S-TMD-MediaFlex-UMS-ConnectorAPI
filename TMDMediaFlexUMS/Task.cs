@@ -53,6 +53,6 @@
 
 		[XmlElement("startedDate")]
 		[JsonProperty("startedDate")]
-		public DateTime StartedDate { get; set; }
+		public string StartedDate { get; set; }
 	}
 }
