@@ -72,11 +72,11 @@
 
 		[XmlElement("createdDate")]
         [JsonProperty("createdDate")]
-		public string CreatedDate { get; set; }
+		public DateTime CreatedDate { get; set; }
 
 		[XmlElement("startedDate")]
         [JsonProperty("startedDate")]
-		public string StartedDate { get; set; }
+		public DateTime StartedDate { get; set; }
 
 		[XmlElement("notes")]
         [JsonProperty("notes")]
