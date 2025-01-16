@@ -33,8 +33,8 @@
         /// <summary>
         /// Gets or sets the audio type (e.g., podcast, music, audiobook, etc.).
         /// </summary>
-        [XmlElement("audioType")]
-        [JsonProperty("audioType")]
+        [XmlElement("AudioType")]
+        [JsonProperty("AudioType")]
         public string AudioType { get; set; }
     }
 }
