@@ -14,7 +14,7 @@
 		/// <summary>
 		/// 
 		/// </summary>
-		[XmlElement("parameters")]
+		[XmlArray("parameters")]
 		[XmlArrayItem("param")]
 		[JsonProperty("parameters")]
 		public List<Param> Parameters { get; set; }
