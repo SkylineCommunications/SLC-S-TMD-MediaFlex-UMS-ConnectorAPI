@@ -82,9 +82,9 @@
         /// Defines the input materials for the job's operations.
         /// </summary>
         [XmlArray("sourceItems")]
-        [XmlArrayItem("sourceItem")]
-        [JsonProperty("sourceItems")]
-        public List<string> SourceItems { get; set; } = new List<string>();
+        [XmlArrayItem("sourceItemSearch")]
+        [JsonProperty("sourceItemSearch")]
+        public List<SourceItemSearch> SourceItems { get; set; } = new List<SourceItemSearch>();
 
         /// <summary>
         /// Serializes the current job to XML.
