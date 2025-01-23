@@ -15,7 +15,7 @@
 	/// <summary>
 	/// Represents a TMD MediaFlex UMS element in DataMiner and exposes methods to request and release locks on specific objects.
 	/// </summary>
-	public class TmdMediaFlexUmsElement
+	public class TmdMediaFlexUmsElement : ITmdMediaFlexUmsElement
 	{
 		private readonly IConnection connection;
 		private readonly IDmsElement element;
