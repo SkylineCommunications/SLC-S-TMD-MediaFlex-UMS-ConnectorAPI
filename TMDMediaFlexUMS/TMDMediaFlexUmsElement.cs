@@ -2,11 +2,13 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 
 	using Newtonsoft.Json;
-
 	using Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS.Messages;
+	using Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS.Models.Element;
+	using Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS.Models.MediaFlexPlatformCommunication;
 	using Skyline.DataMiner.Core.DataMinerSystem.Common;
 	using Skyline.DataMiner.Core.InterAppCalls.Common.CallBulk;
 	using Skyline.DataMiner.Core.InterAppCalls.Common.CallSingle;
@@ -23,7 +25,7 @@
 
 		private TimeSpan? timeout;
 
-		private static readonly List<Type> knownTypes = new List<Type>
+		private static readonly List<System.Type> knownTypes = new List<System.Type>
 		{
 			typeof(IInterAppCall),
 			typeof(AddWorkflowMetadataRequest),
@@ -38,7 +40,7 @@
 		/// <summary>
 		/// List of known types. Used during InterApp communication.
 		/// </summary>
-		public static IEnumerable<Type> KnownTypes => knownTypes;
+		public static IEnumerable<System.Type> KnownTypes => knownTypes;
 
 		/// <summary>
 		/// Gets the name of the DataMiner element.
@@ -72,7 +74,7 @@
 		/// Maximum amount of time in which every request to the MediaFlex UMS element should be handled.
 		/// Default: 10 seconds.
 		/// </summary>
-		public TimeSpan Timeout
+		public TimeSpan InterAppTimeout
 		{
 			get
 			{
@@ -85,7 +87,7 @@
 				}
 				catch (Exception e)
 				{
-					logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Unable to retrieve timeout from element due to {e}, defaulting to 10 seconds.");
+					Log($"Unable to retrieve timeout from element due to {e}, defaulting to 10 seconds.");
 					timeout = TimeSpan.FromSeconds(10);
 					return (TimeSpan)timeout;
 				}
@@ -142,15 +144,58 @@
 
 			if (!TrySendMessage(request, true, out string reason, out AddWorkflowMetadataResponse response))
 			{
-				logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Something when wrong in InterApp communication: {reason}");
+				Log($"Something when wrong in InterApp communication: {reason}");
 				throw new InvalidOperationException($"Unable to add meta data to recording due to {reason}");
 			}
 
 			if (!response.Success)
 			{
-				logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(Timeout), $"Failed response received: {reason}");
+				Log($"Failed response received: {reason}");
 				throw new InvalidOperationException($"Unable to add meta data to recording due to {response.Reason}");
 			}
+		}
+
+		/// <summary>
+		/// Gets the <see cref="FileStatusUpdate"/> for the gived ID.
+		/// </summary>
+		/// <param name="fileStatusUpdateId"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="InvalidOperationException"></exception>
+		public FileStatusUpdate GetFileStatusUpdate(string fileStatusUpdateId)
+		{
+			if (string.IsNullOrWhiteSpace(fileStatusUpdateId))
+			{
+				throw new ArgumentException($"'{nameof(fileStatusUpdateId)}' cannot be null or whitespace.", nameof(fileStatusUpdateId));
+			}
+
+			var fileStatusUpdatesRow = element.GetTable(TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.TablePid).GetRow(fileStatusUpdateId) ?? throw new InvalidOperationException($"No row found with primary key '{fileStatusUpdateId}'");
+			
+			var fileStatusUpdate = new FileStatusUpdate
+			{
+				Id = Convert.ToString(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.Id]),
+				PlasmaId = Convert.ToString(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.PlasmaId]),
+				TimeStamp = DateTime.FromOADate(Convert.ToDouble(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.Timestamp])),
+				Type = (Models.Element.Type)Convert.ToInt32(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.Type]),
+				Status = (Status)Convert.ToInt32(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.Status]),
+				Description = Convert.ToString(fileStatusUpdatesRow[TmdMediaFlexUmsProtocol.FileStatusUpdatesTable.Idx.Description]),
+			};
+
+			return fileStatusUpdate;
+		}
+
+		public void SendFileStatusUpdate(FileStatusUpdate fileStatusUpdate)
+		{
+			if (fileStatusUpdate is null)
+			{
+				throw new ArgumentNullException(nameof(fileStatusUpdate));
+			}
+
+			string serializedFileStatusUpdate = JsonConvert.SerializeObject(fileStatusUpdate);
+
+			element.GetStandaloneParameter<string>(TmdMediaFlexUmsProtocol.LastNotificationPid).SetValue(serializedFileStatusUpdate);
+
+			Log($"Sent File Status Update '{serializedFileStatusUpdate}'");
 		}
 
 		private bool TrySendMessage<T>(Message message, bool requiresResponse, out string reason, out T responseMessage) where T : Message
@@ -161,13 +206,13 @@
 			var commands = InterAppCallFactory.CreateNew();
 			commands.Messages.Add(message);
 
-			logger?.Log(nameof(TmdMediaFlexUmsElement), nameof(TrySendMessage), $"Message: {JsonConvert.SerializeObject(message)}");
+			Log($"Message: {JsonConvert.SerializeObject(message)}");
 
 			try
 			{
 				if (requiresResponse)
 				{
-					var response = commands.Send(connection, element.AgentId, element.Id, TmdMediaFlexUmsProtocol.InterAppReceivePid, Timeout, knownTypes).First();
+					var response = commands.Send(connection, element.AgentId, element.Id, TmdMediaFlexUmsProtocol.InterAppReceivePid, InterAppTimeout, knownTypes).First();
 					if (!(response is T castResponse))
 					{
 						reason = $"Received response is not of type {typeof(T)}";
@@ -188,6 +233,18 @@
 			}
 
 			return true;
+		}
+
+		private void Log(string message)
+		{
+			if (logger == null)
+			{
+				return;
+			}
+
+			string nameOfMethod = new StackTrace().GetFrame(1).GetMethod().Name;
+
+			logger.Log(GetType().Name, nameOfMethod, message);
 		}
 	}
 }

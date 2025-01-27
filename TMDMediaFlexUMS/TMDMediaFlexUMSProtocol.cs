@@ -10,6 +10,8 @@
         /// </summary>
         public static readonly string Name = "TMD MediaFlex UMS";
 
+		public static readonly int LastNotificationPid = 10;
+
         /// <summary>
         /// ID of the read parameter containing the Timeout value in seconds used for all InterApp communication to the element.
         /// </summary>
@@ -19,5 +21,25 @@
         /// ID of the read parameter to on which all InterApp messages are received.
         /// </summary>
         public static readonly int InterAppReceivePid = 9000000;
-    }
+
+		public class FileStatusUpdatesTable
+		{
+			public const int TablePid = 1000;
+
+			public class Pid
+			{
+				public const int ReconcileKeyId = 2110;
+			}
+
+			public static class Idx
+			{
+				public static readonly int Id = 0;
+				public static readonly int PlasmaId = 1;
+				public static readonly int Timestamp = 2;
+				public static readonly int Type = 3;
+				public static readonly int Status = 4;
+				public static readonly int Description = 5;
+			}
+		}
+	}
 }

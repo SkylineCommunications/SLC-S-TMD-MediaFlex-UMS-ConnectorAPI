@@ -1,4 +1,4 @@
-﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS
+﻿namespace Skyline.DataMiner.ConnectorAPI.TMDMediaFlexUMS.Models.MediaFlexPlatformCommunication
 {
 	using System.Collections.Generic;
 	using System.Xml.Serialization;
