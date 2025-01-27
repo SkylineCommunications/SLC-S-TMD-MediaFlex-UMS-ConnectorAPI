@@ -184,6 +184,11 @@
 			return fileStatusUpdate;
 		}
 
+		/// <summary>
+		/// Sends a file status update message to the web service of the element.
+		/// </summary>
+		/// <param name="fileStatusUpdate"></param>
+		/// <exception cref="ArgumentNullException"></exception>
 		public void SendFileStatusUpdate(FileStatusUpdate fileStatusUpdate)
 		{
 			if (fileStatusUpdate is null)

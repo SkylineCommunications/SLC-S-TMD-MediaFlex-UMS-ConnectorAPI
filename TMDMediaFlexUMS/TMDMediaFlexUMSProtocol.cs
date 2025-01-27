@@ -10,6 +10,9 @@
         /// </summary>
         public static readonly string Name = "TMD MediaFlex UMS";
 
+		/// <summary>
+		/// ID of the parameter that receives the message from the web service.
+		/// </summary>
 		public static readonly int LastNotificationPid = 10;
 
         /// <summary>
@@ -22,22 +25,65 @@
         /// </summary>
         public static readonly int InterAppReceivePid = 9000000;
 
-		public class FileStatusUpdatesTable
+		/// <summary>
+		/// Represent the File Status Update table.
+		/// </summary>
+		public static class FileStatusUpdatesTable
 		{
-			public const int TablePid = 1000;
+			/// <summary>
+			/// ID of the table parameter.
+			/// </summary>
+			public static readonly int TablePid = 1000;
 
-			public class Pid
+			/// <summary>
+			/// Parameter IDs of columns.
+			/// </summary>
+			public static class Pid
 			{
-				public const int ReconcileKeyId = 2110;
+				/// <summary>
+				/// Parameter ID of the reconcile key column.
+				/// </summary>
+				public static readonly int ReconcileKeyId = 2110;
 			}
 
+			/// <summary>
+			/// Parameter indexes of columns.
+			/// </summary>
 			public static class Idx
 			{
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int Id = 0;
+
+
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int PlasmaId = 1;
+
+
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int Timestamp = 2;
+
+
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int Type = 3;
+
+
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int Status = 4;
+
+
+				/// <summary>
+				/// 
+				/// </summary>
 				public static readonly int Description = 5;
 			}
 		}

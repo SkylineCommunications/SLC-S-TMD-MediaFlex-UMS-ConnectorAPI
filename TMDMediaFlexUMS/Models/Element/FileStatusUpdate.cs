@@ -87,7 +87,7 @@
 		{
 			int hashCode = (Id == null) ? 1 : Id.GetHashCode();
 
-			hashCode = (PlasmaId == null) ? 1 : PlasmaId.GetHashCode();
+			hashCode ^= (PlasmaId == null) ? 1 : PlasmaId.GetHashCode();
 			hashCode ^= TimeStamp.GetHashCode();
 			hashCode ^= (ParsedType == null) ? 1 : ParsedType.GetHashCode();
 			hashCode ^= (ParsedStatus == null) ? 1 : ParsedStatus.GetHashCode();
