@@ -18,7 +18,7 @@
 		/// </summary>
 		[XmlElement("presetName")]
 		[JsonProperty("presetName")]
-		public string PresetName { get; set; } = "DataminerMTDInWflow";
+		public string PresetName { get; set; } = "DataminerMetadataInWflow";
 
 		/// <summary>
 		/// Stores additional information or comments related to the job.
